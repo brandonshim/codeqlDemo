@@ -3,7 +3,7 @@
 
 void vuln_function() {
     char buffer[10];
-    printf("Enter your name: ");
+    printf("input: ");
     gets(buffer);  
 
     char another_buffer[10];
