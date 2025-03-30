@@ -24,14 +24,18 @@ jobs:
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
-        languages: cpp  # Ensure C++ vulnerabilities are scanned
+        languages: cpp
 
     - name: Build project
       run: |
         sudo apt update && sudo apt install -y build-essential
-        make || gcc -o vuln vuln.c
+        gcc -o vuln vuln.c
+        gcc -o vuln2 vuln2.c
+        gcc -o vuln3 vuln3.c || true  # Prevent failure if file doesn't exist
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
-        category: "/security-extended"
+        category: "/security-extended,security-and-quality"
+        ram: 4096  # Increase memory for scanning
+        threads: 2  # Enable parallel processing
